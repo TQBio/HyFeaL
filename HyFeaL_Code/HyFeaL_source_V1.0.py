@@ -1,3 +1,11 @@
+###############################################################
+# Programming instructions：
+# A fast and accurate dimension reduction framework for methylation microarray data analysis using hybrid feature learning.
+# This script is comprised of the functions for identifying DMS and visualization in HyFeaL computational framework.
+# Final Edit Time ：2021.9.23
+##############################################################
+
+# Dependent packages
 from skfeature.function.statistical_based import chi_square
 from skfeature.function.statistical_based import f_score
 from skfeature.function.similarity_based import fisher_score
@@ -5,9 +13,13 @@ from skfeature.function.similarity_based import reliefF
 from sklearn.model_selection import StratifiedShuffleSplit
 import numpy as np
 import pandas as pd
+
 #X = fs.values
 #y = np.array(lb)
 
+##############################################################
+# Hybrid ensemble feature selection for identifying DMS
+##############################################################
 def EFS_1s(X,y,num_fea):
     s1 = chi_square.chi_square(X, y)
     id1 = chi_square.feature_ranking(s1)[0:num_fea]
@@ -52,3 +64,28 @@ def EFS_2s(X,y,num_fea,ms,cv):
         e = np.array(d).reshape(-1,)
         #X_selected = fs[:,e]
     return e
+
+
+##############################################################
+# Visualization with graph learning and t-SNE
+##############################################################
+from sklearn.manifold import TSNE
+
+def Labelcorr(y):
+    S = np.zeros((len(y), len(y)))
+    for i in range(len(y)):
+        for j in range(i, len(y)):
+            if(y[i]==y[j]):
+                S[i][j] = 1
+            else:
+                S[i][j] = 0
+            S[j][i]=S[i][j]
+    return S
+
+def SGE_tsne(X,y,N=25): # supervised t-SNE for low-dimensional embeddings
+    G1 = 1-squareform(pdist(X,metric='correlation'))
+    G2 = Labelcorr(y)
+    G3 = np.multiply(G1,G2)
+    G3_dism = -G3+1
+    em_final = TSNE(n_components=2,metric='precomputed',perplexity=N).fit_transform(G3_dism) 
+    return em_final
