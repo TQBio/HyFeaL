@@ -1,2 +1,4 @@
 # HyFeaL
-A fast and accurate dimension reduction framework for meth-ylation microarray data analysis using hybrid feature learning
+A fast and accurate dimension reduction framework for methylation microarray data analysis using hybrid feature learning.
+
+## The overview of HyFeaL
