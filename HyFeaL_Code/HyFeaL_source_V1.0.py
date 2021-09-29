@@ -20,7 +20,7 @@ import pandas as pd
 ##############################################################
 # Hybrid ensemble feature selection for identifying DMS
 ##############################################################
-def EFS_1s(X,y,num_fea=int(X.shape[1]*0.05)):
+def EFS_1s(X,y,num_fea=int(X.shape[1]*0.05)):#By deualt, Q1 = 5%
     s1 = chi_square.chi_square(X, y)
     id1 = chi_square.feature_ranking(s1)[0:num_fea]
     s2 = f_score.f_score(X, y)
@@ -50,8 +50,8 @@ def Single(X,y,method,num_fea=int(X.shape[1]*0.05)):
         print('check input...')
     return idx
 
-def EFS_2s(X,y,num_fea,ms,cv):
-    ss = StratifiedShuffleSplit(n_splits=30, test_size=0.2, random_state=123)
+def EFS_2s(X,y,num_fea=int(X.shape[1]*0.2),ms,split): #By deualt, Q2 = 20%
+    ss = StratifiedShuffleSplit(n_splits=split, test_size=0.2, random_state=123)
     df = pd.DataFrame()
     for train_index, test_index in ss.split(X, y):
         X_train, y_train = X[train_index], y[train_index]
@@ -60,7 +60,7 @@ def EFS_2s(X,y,num_fea,ms,cv):
         df = df.append(pd.Series(id_fs),ignore_index=True)
         df = df.astype(int)
         c = np.bincount(df.values.flat)
-        d = np.where(c>=cv)
+        d = np.where(c>=int(split*0.5))
         e = np.array(d).reshape(-1,)
         X_filtered = X[:,e]
     return X_filtered
