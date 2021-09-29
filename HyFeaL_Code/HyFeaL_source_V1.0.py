@@ -20,7 +20,7 @@ import pandas as pd
 ##############################################################
 # Hybrid ensemble feature selection for identifying DMS
 ##############################################################
-def EFS_1s(X,y,num_fea):
+def EFS_1s(X,y,num_fea=int(X.shape[1]*0.05)):
     s1 = chi_square.chi_square(X, y)
     id1 = chi_square.feature_ranking(s1)[0:num_fea]
     s2 = f_score.f_score(X, y)
@@ -33,7 +33,7 @@ def EFS_1s(X,y,num_fea):
     X_filtered = X[:,id_comb]
     return X_filtered
 
-def Single(X,y,method,num_fea=int(X.shape[1])):
+def Single(X,y,method,num_fea=int(X.shape[1]*0.05)):
     if method=='chi_square':
         score = chi_square.chi_square(X, y)
         idx = chi_square.feature_ranking(s1)[0:num_fea]
