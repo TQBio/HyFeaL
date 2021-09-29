@@ -22,7 +22,7 @@ import pandas as pd
 ##############################################################
 # Hybrid ensemble feature selection for identifying DMS
 ##############################################################
-def HyFeaL_1s(X,y,num_fea=int(X.shape[1]*0.05)):#By deualt, Q1 = 5%
+def HyFeaL_1s(X,y,Q1=0.05)):#By deualt, Q1 = 5%
     s1 = chi_square.chi_square(X, y)
     id1 = chi_square.feature_ranking(s1)[0:num_fea]
     s2 = f_score.f_score(X, y)
@@ -95,10 +95,10 @@ def Labelcorr(y):
             S[j][i]=S[i][j]
     return S
 
-def SGE_tsne(X,y,N=25):
+def SGE_tsne(X,y,perplexity):
     G1 = 1-squareform(pdist(X,metric='correlation'))
     G2 = Labelcorr(y)
     G3 = np.multiply(G1,G2)
     G3_dism = -G3+1
-    em_final = TSNE(n_components=2,metric='precomputed',perplexity=N).fit_transform(G3_dism) 
+    em_final = TSNE(n_components=2,metric='precomputed',perplexity=perplexity).fit_transform(G3_dism) 
     return em_final
