@@ -30,10 +30,10 @@ def EFS_1s(X,y,num_fea):
     s4 = reliefF.reliefF(X, y)
     id4 = reliefF.feature_ranking(s4)[0:num_fea]
     id_comb = list(set(id1).union(id2,id3,id4)) 
-    #X_filtered = fs[:,id_comb]
-    return id_comb
+    X_filtered = X[:,id_comb]
+    return X_filtered
 
-def Single(X,y,method,num_fea):
+def Single(X,y,method,num_fea=int(X.shape[1])):
     if method=='chi_square':
         score = chi_square.chi_square(X, y)
         idx = chi_square.feature_ranking(s1)[0:num_fea]
@@ -62,12 +62,12 @@ def EFS_2s(X,y,num_fea,ms,cv):
         c = np.bincount(df.values.flat)
         d = np.where(c>=cv)
         e = np.array(d).reshape(-1,)
-        #X_selected = fs[:,e]
-    return e
+        X_filtered = X[:,e]
+    return X_filtered
 
 
 ##############################################################
-# Visualization with graph learning and t-SNE
+# Visualization with HyFeaL
 ##############################################################
 from sklearn.manifold import TSNE
 
@@ -82,7 +82,7 @@ def Labelcorr(y):
             S[j][i]=S[i][j]
     return S
 
-def SGE_tsne(X,y,N=25): # supervised t-SNE for low-dimensional embeddings
+def SGE_tsne(X,y,N=25):
     G1 = 1-squareform(pdist(X,metric='correlation'))
     G2 = Labelcorr(y)
     G3 = np.multiply(G1,G2)
