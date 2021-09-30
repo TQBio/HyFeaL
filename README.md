@@ -8,7 +8,7 @@ A fast and accurate dimension reduction framework for methylation microarray dat
 
 ### 1) The preprocess instructions of Infinium Human Methylation 450k data is available at our previous work [HyDML](https://github.com/TQBio/HyDML).
 
-### 2) Identifying the robust DMS with HyFeaL
+### 2) Methylation array data analysis with HyFeaL
    
 2-1: Input the preprocessed array data with size of n * m array, n is the number of the samples, m is the number of CpGs(features).
    
