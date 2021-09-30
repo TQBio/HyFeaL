@@ -9,6 +9,8 @@ A fast and accurate dimension reduction framework for methylation microarray dat
 ### 1) The preprocess instructions of Infinium Human Methylation 450k data is available at our previous work [HyDML](https://github.com/TQBio/HyDML).
 
 ### 2) Methylation array data analysis with HyFeaL
+
+Since the original Infinium 450k array data is too large, we upload test data for validating HyFeaL at Test.zip.
    
 2-1: Input the preprocessed array data with size of n * m array, n is the number of the samples, m is the number of CpGs(features).
    
