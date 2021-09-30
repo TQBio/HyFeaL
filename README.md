@@ -44,5 +44,6 @@ A fast and accurate dimension reduction framework for methylation microarray dat
        
        
        
-       
+# Contact
+ tqglowing@std.uestc.edu.cn
 
